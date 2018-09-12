@@ -1,0 +1,37 @@
+﻿@model NSDBz.Models.Species
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
+<style>
+	body {
+		padding-top: 22px;
+	}
+</style>
+<br />
+<h3 style="font-family: 'Abel', sans-serif; text-align:center">Are you sure you want to delete @Html.DisplayFor(model => model.Name)?</h3>
+    
+    <hr style="width:25vw;" />
+   
+	<div class="container" style="margin-top:25px;">
+	<div class="row">
+		<div class="col-md-12" style="text-align:center;">
+			<img src="@Html.DisplayFor(model => model.ImgUrl)" width="420px" height="270px" />
+		</div>
+		</div>
+	 
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+		<br />
+		<br />
+		
+        <div class="form-actions no-color" style="text-align:center">
+            <input type="submit" value="Delete" class="btn btn-default" style="font-size:1em" /> |
+            @Html.ActionLink("Species", "Index")
+        </div>
+    }
+</div>

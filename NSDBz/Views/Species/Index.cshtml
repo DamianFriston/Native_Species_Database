@@ -1,0 +1,105 @@
+﻿@model PagedList.IPagedList<NSDBz.Models.Species>
+@using PagedList.Mvc;
+
+@{
+	ViewBag.Title = "Index";
+}
+<link href="~/Content/CSS/Main.css" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
+<style>
+	body {
+		padding-top: 20px;
+	}
+</style>
+
+
+		<p style="font-size:1.75em;float:left;padding-left:100px;opacity:0.6;bottom:100px;">Search @Html.ActionLink("Countries", "Index", "Country", new { }, new { @class = "home2Buttons" })</p>
+	
+		<div class="dspInfo" style="margin-top:75px;">
+
+			
+
+			@using (Html.BeginForm("Index", "Species", FormMethod.Get))
+			{
+				<p>
+					@Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+					<input type="submit" value="Search" />
+
+					&nbsp;&nbsp;&nbsp;&nbsp;Poisonous:&nbsp;<input id="Poison" type="checkbox" name="Poison" value="on" style="vertical-align:middle;margin-top:0;" />
+					&nbsp;&nbsp;&nbsp;&nbsp;Venomous:&nbsp;<input id="Venom" type="checkbox" name="Venom" value="on" style="vertical-align:middle;margin-top:0;" />
+				
+					&nbsp;&nbsp;&nbsp;&nbsp;Class:&nbsp;
+
+					<select id="Classification" name="Classification">
+						<option value="">-- Select a Class --</option>
+						<option value="Mammal">Mammal</option>
+						<option value="Bird">Bird</option>
+						<option value="Reptile">Reptile</option>
+						<option value="Amphibian">Amphibian</option>
+						<option value="Fish">Fish</option>
+						<option value="Other">Other</option>
+					</select>
+				
+
+
+
+				</p>
+			}
+			<table class="table">
+				<tr>
+					<th>
+						Image URL
+					</th>
+					<th>
+						@Html.DisplayNameFor(model => model.First().Name)
+					</th>
+					<th>
+						@Html.DisplayNameFor(model => model.First().Class)
+					</th>
+					<th>
+						@Html.DisplayNameFor(model => model.First().Legs)
+					</th>
+					<th>
+						@Html.DisplayNameFor(model => model.First().Toxicity)
+					</th>
+					<th style="padding-left:75px;width:200px;">
+						@Html.ActionLink("Create New", "Create")
+					</th>
+				</tr>
+
+				@foreach (var item in Model)
+				{
+					<tr>
+						<td>
+							<img src="@Html.DisplayFor(model => item.ImgUrl)" width="220px" height="135px" />
+						</td>
+						<td>
+							@Html.DisplayFor(modelItem => item.Name)
+						</td>
+						<td>
+							@Html.DisplayFor(modelItem => item.Class)
+						</td>
+						<td>
+							@Html.DisplayFor(modelItem => item.Legs)
+						</td>
+						<td>
+							@Html.DisplayFor(modelItem => item.Toxicity)
+						</td>
+						<td>
+							@Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+							@Html.ActionLink("Details", "Details", new { id = item.ID }) |
+							@Html.ActionLink("Delete", "Delete", new { id = item.ID })
+						</td>
+					</tr>
+				}
+
+			</table>
+			<br />
+			Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+			@Html.PagedListPager(Model, page => Url.Action("Index",
+			new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }), new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded })
+			
+			
+		</div>
+

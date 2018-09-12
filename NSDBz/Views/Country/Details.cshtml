@@ -1,0 +1,90 @@
+﻿@model NSDBz.Models.Country
+
+@{
+    ViewBag.Title = "Details";
+}
+<link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
+
+<div class="container" style="margin-top:50px;">
+	<div class="row">
+		<div class="col-md-4" style="padding-left:175px;">
+			<img src="@Html.DisplayFor(model => model.ImgUrl)" width="325px" height="220px" />
+		</div>
+
+		<div class="col-md-8" style="padding-left:250px;">
+			<br />
+			<strong>Name:</strong>
+			@Html.DisplayFor(model => model.Name) <br /><br />
+			<strong>Size (km²):</strong>
+			@Html.DisplayFor(model => model.Size) <br /><br />
+			<strong>Hemisphere:</strong>
+			@Html.DisplayFor(model => model.Hemisphere) <br /><br />
+
+
+
+		</div>
+	</div>
+
+</div>
+	</div>
+
+<div class="row">
+	<div class="col-md-12" style="text-align:center; width:50vw; margin:auto;">
+		<br /><br /><br />
+		<h4>Description:</h4>
+		@Html.DisplayFor(model => model.Description)
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12" style="text-align:center; width:30vw; margin:auto;">
+		<br /><br /><br />
+		<h4>Native Species:</h4>
+		<br />
+		@{
+			try
+			{
+				var alphab = Model.Species.OrderBy(s => s.Name);
+
+				var last = alphab.Last();
+
+				foreach (var ctry in alphab)
+				{
+					@: <strong>@Html.ActionLink(ctry.Name, "Details", "Species", new { id = ctry.ID }, null)</strong>
+
+
+					if (!ctry.Equals(last))
+					{
+
+						@:|
+
+					}
+								
+				}
+			}
+
+
+			catch (InvalidOperationException)
+			{
+
+				<strong>There are currently no assigned Species for @Model.Name</strong>
+
+			}
+
+		}
+
+	</div>
+</div>
+
+<br /><br /><br /><br />
+
+<div class="row">
+	<div class="col-md-12" style="text-align:center; width:30vw; margin:auto;">
+		<p>
+			@Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+			@Html.ActionLink("Countries", "Index")
+		</p>
+	</div>
+</div>
+
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br />

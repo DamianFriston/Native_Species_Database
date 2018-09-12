@@ -1,0 +1,92 @@
+﻿@model PagedList.IPagedList<NSDBz.Models.Country>
+@using PagedList.Mvc;
+
+	@{
+		ViewBag.Title = "Index";
+	}
+	<link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
+
+	<style>
+		body {
+			padding-top: 20px;
+		}
+	</style>
+
+	<p style="font-size:1.75em;float:left;padding-left:100px;opacity:0.6;bottom:100px;">Search @Html.ActionLink("Species", "Index", "Species", new { }, new { @class = "home2Buttons" })</p>
+
+	<div class="dspInfo" style="margin-top:75px">
+
+		
+
+			@using (Html.BeginForm("Index", "Country", FormMethod.Get))
+			{
+			<p>
+				@Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+				<input type="submit" value="Search" />
+
+				&nbsp;&nbsp;&nbsp;&nbsp;Search by Hemisphere:
+
+				<select id="SelectedHemisphere" name="SelectedHemisphere">
+					<option value="">-- Select Hemisphere --</option>
+					<option value="Northern">Northern</option>
+					<option value="Southern">Southern</option>
+					<option value="Both">Both</option>
+				</select>
+			</p>
+			}
+			<table class="table">
+				<tr>
+					<th>
+						Image URL
+					</th>
+					<th>
+						@Html.DisplayNameFor(model => model.First().Name)
+					</th>
+					@*<th>
+							@Html.DisplayNameFor(model => model.Description)
+						</th>*@
+					<th>
+						Size (km²)
+					</th>
+					<th>
+						@Html.DisplayNameFor(model => model.First().Hemisphere)
+					</th>
+					<th style="padding-left:75px;width:200px;">
+						@Html.ActionLink("Create New", "Create")
+					</th>
+				</tr>
+
+				@foreach (var item in Model)
+				{
+					<tr>
+						<td>
+							<img src="@Html.DisplayFor(model => item.ImgUrl)" width="220px" height="130px" />
+						</td>
+						<td>
+							@Html.DisplayFor(modelItem => item.Name)
+						</td>
+						@*<td>
+								@Html.DisplayFor(modelItem => item.Description)
+							</td>*@
+						<td>
+							@Html.DisplayFor(modelItem => item.Size)
+						</td>
+						<td>
+							@Html.DisplayFor(modelItem => item.Hemisphere)
+						</td>
+						<td>
+							@Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+							@Html.ActionLink("Details", "Details", new { id = item.ID }) |
+							@Html.ActionLink("Delete", "Delete", new { id = item.ID })
+						</td>
+					</tr>
+				}
+
+			</table>
+		Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+		@Html.PagedListPager(Model, page => Url.Action("Index",
+			new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }), new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded })
+
+
+		</div>

@@ -1,0 +1,171 @@
+﻿@model NSDBz.Models.Species
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
+
+<h2 style="font-family: 'Abel', sans-serif; text-align:center">Edit</h2>
+<hr style="width:25vw;" />
+<h3 style="text-align:center;font-family: 'Abel', sans-serif;">@Html.DisplayFor(model => model.Name)</h3>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+	<div class="form-horizontal">
+
+		<hr />
+		@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+		@Html.HiddenFor(model => model.ID)
+
+		<div class="form-group">
+			<div class="control-label col-md-2" style="font-weight:600;">Image URL</div>
+			<div class="col-md-10">
+				@Html.EditorFor(model => model.ImgUrl, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(model => model.ImgUrl, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		@{
+			List<SelectListItem> CItems = new List<SelectListItem>();
+			CItems.Add(new SelectListItem
+			{
+				Text = "Mammal",
+				Value = "Mammal"
+			});
+			CItems.Add(new SelectListItem
+			{
+				Text = "Bird",
+				Value = "Bird",
+			});
+			CItems.Add(new SelectListItem
+			{
+				Text = "Reptile",
+				Value = "Reptile"
+			});
+			CItems.Add(new SelectListItem
+			{
+				Text = "Amphibian",
+				Value = "Amphibian"
+			});
+			CItems.Add(new SelectListItem
+			{
+				Text = "Fish",
+				Value = "Fish"
+			});
+			CItems.Add(new SelectListItem
+			{
+				Text = "Other",
+				Value = "Other"
+			});
+
+		}
+		<div class="form-group">
+			@Html.LabelFor(model => model.Class, htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10" style="top:7px;">
+				@Html.DropDownListFor(model => model.Class, CItems, "-- Select Class --")
+				@Html.ValidationMessageFor(model => model.Class, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(model => model.Bio, htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@Html.EditorFor(model => model.Bio, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(model => model.Bio, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(model => model.Legs, htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@Html.EditorFor(model => model.Legs, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(model => model.Legs, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		@{
+			List<SelectListItem> listItems = new List<SelectListItem>();
+			listItems.Add(new SelectListItem
+			{
+				Text = "None",
+				Value = "None"
+			});
+			listItems.Add(new SelectListItem
+			{
+				Text = "Poisonous",
+				Value = "Poisonous",
+
+			});
+			listItems.Add(new SelectListItem
+			{
+				Text = "Venomous",
+				Value = "Venomous"
+			});
+
+		}
+
+
+		<div class="form-group">
+			@Html.LabelFor(model => model.Toxicity, htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10" style="top:7px;">
+				@Html.DropDownListFor(model => model.Toxicity, listItems, "-- Select Toxicity --")
+				@Html.ValidationMessageFor(model => model.Toxicity, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		<br />
+		<br />
+
+		<div>
+
+			<label class="control-label">Native Countries</label>
+			@Html.ListBox("selectedCountries", (MultiSelectList)ViewBag.selOpts, new { @class = "form-control" })
+
+
+			<div style="margin-top:10px;padding-left:90px;">
+
+				<button type="button" id="btnRight" class="btn btn-warning btn-lg" style="background-color:#9a9a9a;border-color:#9a9a9a">
+					<span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+				</button>
+
+				<button type="button" id="btnLeft" class="btn btn-success btn-lg" style="background-color:#f36d3c;border-color:#f36d3c">
+					<span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+				</button>
+
+			</div>
+
+			<div>
+				<label class="control-label">Available Countries</label>
+				@Html.ListBox("availCountries", (MultiSelectList)ViewBag.availOpts, new { @class = "form-control" })
+			</div>
+		</div>
+	</div>
+
+		<div class="row" style="margin-top:45px">
+			<div class="col-lg-2">
+				<input type="submit" id="btnSubmit" value="Save" class="btn btn-default" style="font-size:1em;" />
+			
+					| @Html.ActionLink("Species", "Index", null, new { @class = "delete" })
+				</div>
+			</div>
+	
+
+
+
+			}
+
+		@section Scripts {
+			@Scripts.Render("~/bundles/jqueryval")
+			@Scripts.Render("~/bundles/multisel")
+		}

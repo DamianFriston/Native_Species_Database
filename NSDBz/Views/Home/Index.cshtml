@@ -1,0 +1,48 @@
+﻿@{
+	ViewBag.Title = "Home Page";
+}
+
+@{
+	Layout = "";
+}
+
+<style>
+	body {
+	
+		font-family: 'Roboto Condensed', sans-serif;
+		font-family: 'Anton', sans-serif;
+	}
+
+</style>
+
+<link href="~/Content/CSS/Main.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
+
+<br /><br /><br /><br />
+
+<div class="container">
+	<div class="row" style="text-align:center">
+		<div class="col-sm-6" style="border-right:1px solid #000;height:200px">
+			<p style="font-size:3em;padding-left:200px;opacity:0.4">Search</p>
+			<p style="font-size:4.5em;padding-left:100px;opacity:0.6">
+				@Html.ActionLink("Countries", "Index", "Country", new { }, new { @class = "home2Buttons" })
+				
+			</p>
+		</div>
+
+
+				
+	<div class="col-sm-6">
+			<p style="font-size:3em;padding-right:200px;opacity:0.4">Search</p>
+			<p style="font-size:4.5em;padding-right:130px;opacity:0.6;color:orangered">
+				@Html.ActionLink("Species", "Index", "Species", new { }, new { @class = "home2Buttons" }) 
+				
+			</p>
+		</div>
+	
+	</div>
+	
+</div>
+
